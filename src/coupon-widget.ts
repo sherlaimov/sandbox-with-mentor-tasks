@@ -23,7 +23,9 @@ template.innerHTML = `
     <main>
       <h2>35% OFF🔥!</h2>
       <p>Limited summer sale coupon code!</p>
-      <button class="get-coupon-btn btn">Get Coupon</button>
+      <slot name="coupon-btn">
+        <button class="get-coupon-btn btn">Get Coupon</button>
+      </slot>
       <button class="no-thanks-btn btn">
         No, I don't want to save money
       </button>
@@ -32,14 +34,15 @@ template.innerHTML = `
 `;
 
 export class CouponWidget extends HTMLElement {
+  private _shadowRoot: ShadowRoot;
   static get observedAttributes() {
     return ["color"];
   }
 
   constructor() {
     super();
-    const shadowRoot = this.attachShadow({ mode: "open" });
-    shadowRoot.appendChild(template.content.cloneNode(true));
+    this._shadowRoot = this.attachShadow({ mode: "closed" });
+    this._shadowRoot.appendChild(template.content.cloneNode(true));
   }
 
   updateStyle = (elem: HTMLElement) => {
@@ -57,8 +60,10 @@ export class CouponWidget extends HTMLElement {
   };
 
   connectedCallback() {
-    const getCouponBtn = this.shadowRoot.querySelector(".get-coupon-btn");
+    const getCouponBtn = this._shadowRoot.querySelector(".get-coupon-btn");
+    const slot = this._shadowRoot.querySelector("slot");
     getCouponBtn.addEventListener("click", this.getCoupon);
+    slot.addEventListener("click", this.getCoupon);
     this.updateStyle(this);
   }
 

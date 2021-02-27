@@ -7,11 +7,34 @@
     <title>Understanding TypeScript</title>
     <script src="dist/bundle.js" defer></script>
     <link rel="stylesheet" href="app.css" />
+    <style>
+      .btn {
+        outline: none;
+        padding: 10px;
+        border: 1 px rgb(24, 66, 205) solid;
+        border-radius: 1px;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .get-coupon-btn {
+        height: 45px;
+        background-color: rgb(237, 237, 237);
+        color: rgb(25, 82, 179);
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    </style>
   </head>
   <body>
     <h1>Web Component</h1>
 
-    <coupon-widget></coupon-widget>
+    <coupon-widget>
+      <button slot="coupon-btn" class="get-coupon-btn btn">
+        I am slotable
+      </button>
+    </coupon-widget>
   </body>
   <script>
     window.addEventListener("DOMContentLoaded", (event) => {
