@@ -1,4 +1,4 @@
-import styles from "./styles/widget.scss";
+import styles from "./widget.scss";
 
 const uuid = () => {
   let dt = new Date().getTime();
